@@ -18,7 +18,15 @@ clearButton.addEventListener('click', clear);
 
 decimalButton.addEventListener('click', addDecimal)
 
-equalButton.addEventListener('click', calculate)
+equalButton.addEventListener('click', () => {
+    if (currentScreen == '0') {
+        currentScreen = '';
+        currentScreenEl.textContent = 'Divide by 0 not allowed';
+        previousScreenEl.textContent = '';
+    } else {
+        calculate();
+    }
+})
 
 numberButtons.forEach( button => {
     button.addEventListener('click', () => handleNumber(button.textContent))
@@ -31,9 +39,10 @@ operatorButtons.forEach( button => {
 
 
 function deleteNumber() {
-    currentScreen = currentScreen.slice(0, -1);
-    currentScreenEl.textContent = currentScreenEl.textContent
-        .slice(0, -1)
+    if (currentScreenEl.textContent !== 'Divide by 0 not allowed') {
+        currentScreen = currentScreen.slice(0, -1);
+        currentScreenEl.textContent = currentScreenEl.textContent.slice(0, -1)
+    }
 }
 
 function clear() {
